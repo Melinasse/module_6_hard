@@ -8,6 +8,8 @@ class Figure:
         self.__sides = list(sides)
         self.__color = list(color)
         self.filled = filled
+        self.__is_valid_color(*color)
+        self.__is_valid_sides(*sides)
 
     def get_color(self):
         return self.__color
@@ -21,6 +23,12 @@ class Figure:
             self.__color = [r, g, b]
         else:
             print(f'Отсутствие выбранного цвета')
+
+    def __is_valid_sides(self, *sides):
+        if len(sides) != len(self.__sides):
+            return False
+        return all(isinstance(side, int) and side > 0 for side in sides) and len(sides) == self.sides_count
+
 
     def get_sides(self):
         return self.__sides
