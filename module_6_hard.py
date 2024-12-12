@@ -4,12 +4,21 @@ import math
 class Figure:
     sides_count = 0
 
-    def __init__(self, color: tuple[int, int, int], *sides: list[int], filled: bool = True):
-        self.__sides = list(sides)
-        self.__color = list(color)
+    def __init__(self, color: tuple[int, int, int], *sides:int, filled: bool = True):
+        if self.__is_valid_color(*color):
+            self.__color = list(color)
+        else:
+            self.__color = [0, 0, 0]
+
+        # self.__sides = list(sides)
+
+        if self.__is_valid_sides(*sides):
+            self.__sides = list(sides)
+        else:
+            self.__sides = [1] * self.sides_count
+
         self.filled = filled
-        self.__is_valid_color(*color)
-        self.__is_valid_sides(*sides)
+
 
     def get_color(self):
         return self.__color
@@ -25,8 +34,8 @@ class Figure:
             print(f'Отсутствие выбранного цвета')
 
     def __is_valid_sides(self, *sides):
-        if len(sides) != len(self.__sides):
-            return False
+        # if len(sides) != len(self.__sides):
+        #     return False
         return all(isinstance(side, int) and side > 0 for side in sides) and len(sides) == self.sides_count
 
 
@@ -46,7 +55,7 @@ class Figure:
 class Circle(Figure):
     sides_count = 1
 
-    def __init__(self, color: tuple[int, int, int], *sides: list[int], filled: bool = True):
+    def __init__(self, color: tuple[int, int, int], *sides:int, filled: bool = True):
         if len(sides) == 1:
             self.__sides = [sides[0]]
         else:
@@ -62,7 +71,7 @@ class Circle(Figure):
 class Triangle(Figure):
     sides_count = 3
 
-    def __init__(self, color: tuple[int, int, int], *sides: list[int], filled: bool = True):
+    def __init__(self, color: tuple[int, int, int], *sides:int, filled: bool = True):
         if len(sides) == 3:
             self.__sides = list(sides)
         else:
@@ -77,7 +86,7 @@ class Triangle(Figure):
 class Cube(Figure):
     sides_count = 12
 
-    def __init__(self, color: tuple[int, int, int], *sides: list[int], filled: bool = True):
+    def __init__(self, color: tuple[int, int, int], *sides:int, filled: bool = True):
         if len(sides) == 1:
             self.__sides = [sides[0]] * 12
         elif len(sides) == 12:
